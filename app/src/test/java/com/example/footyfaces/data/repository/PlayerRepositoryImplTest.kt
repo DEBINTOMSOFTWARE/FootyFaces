@@ -10,8 +10,10 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
+import okio.IOException
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 
@@ -62,7 +64,20 @@ class PlayerRepositoryImplTest {
 
         coEvery { apiService.getPlayers(page = 1) } returns mockResponse
         val result = playerRepository.getPlayers(page = 1).toList()
-        assert(result.size == 1)
+        assert(result.size == 2)
         assertTrue {result[0] is Resource.Loading }
+        assertTrue {result[1] is Resource.Success }
+        val players = (result[1] as Resource.Success).data
+        assertEquals("Player 1", players!!.first[0].common_name)
+        assertEquals(false, players!!.second.has_more)
     }
+
+    @Test
+    fun getPlayers_returnsError() = runTest {
+        coEvery { apiService.getPlayers(page = 1) } throws IOException()
+        val players = playerRepository.getPlayers(page = 1).toList()
+        assertTrue { players[0] is Resource.Loading }
+        assertTrue { players[1] is Resource.Error }
+    }
+
 }
