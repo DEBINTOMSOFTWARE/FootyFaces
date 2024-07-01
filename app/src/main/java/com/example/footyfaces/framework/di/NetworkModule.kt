@@ -1,6 +1,7 @@
 package com.example.footyfaces.framework.di
 
 import android.content.Context
+import com.example.footyfaces.BuildConfig
 import com.example.footyfaces.data.remote.ApiService
 import dagger.Module
 import dagger.Provides
@@ -13,6 +14,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -28,6 +30,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @Named("onlineInterceptor")
     fun provideOnlineInterceptor(): Interceptor = Interceptor { chain ->
         val response = chain.proceed(chain.request())
         val maxAge = 60
@@ -44,26 +47,45 @@ object NetworkModule {
         return loggingInterceptor
     }
 
+    @Provides
+    @Singleton
+    @Named("apiKeyInterceptor")
+    fun provideApiKeyInterceptor(): Interceptor = Interceptor { chain ->
+        val originalRequest = chain.request()
+        val originalUrl = originalRequest.url
+
+        val url = originalUrl.newBuilder()
+            .addQueryParameter("api_token", BuildConfig.PLAYERS_KEY)
+            .build()
+
+        val requestBuilder = originalRequest.newBuilder().url(url)
+        val request = requestBuilder.build()
+        chain.proceed(request)
+    }
+
 
     @Provides
     @Singleton
     fun provideIkHttpClient(
         cache: Cache,
-        onlineInterceptor: Interceptor,
+        @Named("onlineInterceptor") onlineInterceptor: Interceptor,
+        @Named("apiKeyInterceptor") apiKeyInterceptor: Interceptor,
         loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
             .cache(cache)
             .addNetworkInterceptor(onlineInterceptor)
+            .addInterceptor(apiKeyInterceptor)
             .addInterceptor(loggingInterceptor)
             .build()
 
 
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit =
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl("https://api.sportmonks.com/")
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

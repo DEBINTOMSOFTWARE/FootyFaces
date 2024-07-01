@@ -13,7 +13,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class PlayerRepositoryImpl @Inject constructor(private val apiService: ApiService) : PlayerRepository {
-    override suspend fun getPlayers(page: Int): Flow<Resource<Pair<List<PlayerEntity>, PaginationEntity>>> = flow {
+    override fun getPlayers(page: Int): Flow<Resource<Pair<List<PlayerEntity>, PaginationEntity>>> = flow {
         emit(Resource.Loading)
         try {
             val response = apiService.getPlayers(page)
