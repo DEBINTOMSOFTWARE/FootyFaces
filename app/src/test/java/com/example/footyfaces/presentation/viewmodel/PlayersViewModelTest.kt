@@ -29,7 +29,6 @@ import kotlin.test.assertTrue
 @ExperimentalCoroutinesApi
 class PlayersViewModelTest {
 
-
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
@@ -55,33 +54,24 @@ class PlayersViewModelTest {
     fun test_initial_loading_of_players() = testScope.runTest {
         val players = listOf(
             PlayerEntity(
-                city_id = 1,
-                common_name = "Player 1",
-                country_id = 1,
-                date_of_birth = "1990-01-01",
-                detailed_position_id = 1,
-                display_name = "Player 1",
+                displayName = "Player 1",
                 firstname = "Player",
                 gender = "Male",
                 height = 180,
                 id = 1,
-                image_path = "https://example.com/player1.jpg",
+                imagePath = "https://example.com/player1.jpg",
                 lastname = "1",
                 name = "Player 1",
-                nationality_id = 1,
-                position_id = 1,
-                sport_id = 1,
-                type_id = 1,
                 weight = 80
             )
         )
 
         val pagination = PaginationEntity(
             count = 1,
-            current_page = 1,
-            has_more = true,
-            next_page = "",
-            per_page = 10
+            currentPage = 1,
+            hasMore = true,
+            nextPage = "",
+            perPage = 10
         )
 
         coEvery { getPlayersUseCase.getPlayers(1) } returns flow {
@@ -91,7 +81,7 @@ class PlayersViewModelTest {
 
         val states = mutableListOf<PlayerUiState>()
         val job = launch {
-            viewModel.uiState.collect {state ->
+            viewModel.uiState.collect { state ->
                 states.add(state)
 
             }

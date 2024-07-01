@@ -71,7 +71,7 @@ fun BodyText(
     text: String,
     modifier: Modifier = Modifier,
     textAlign: TextAlign = TextAlign.End,
-    color: Color = MaterialTheme.colorScheme.surface,
+    color: Color = MaterialTheme.colorScheme.onSurface,
     fontSize: Int = 14
 ) {
     Text(
@@ -92,7 +92,7 @@ fun BodySmallText(
     text: String,
     modifier: Modifier = Modifier,
     textAlign: TextAlign = TextAlign.Start,
-    color: Color = MaterialTheme.colorScheme.surface,
+    color: Color = MaterialTheme.colorScheme.onSurface,
     fontWeight: FontWeight = FontWeight.Normal,
     fontSize: Int = 12
 ) {

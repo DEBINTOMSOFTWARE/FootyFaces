@@ -30,46 +30,37 @@ class PlayerRepositoryImplTest {
 
     @Test
     fun getPlayers_returnsPlayersAndPagination() = runTest {
-       val mockResponse = PlayerResponse(
-           players = listOf(
-               Player(
-                   city_id = 1,
-                   common_name = "Player 1",
-                   country_id = 1,
-                   date_of_birth = "1990-01-01",
-                   detailed_position_id = 1,
-                   display_name = "Player 1",
-                   firstname = "Player",
-                   gender = "Male",
-                   height = 180,
-                   id = 1,
-                   image_path = "https://example.com/player1.jpg",
-                   lastname = "1",
-                   name = "Player 1",
-                   nationality_id = 1,
-                   position_id = 1,
-                   sport_id = 1,
-                   type_id = 1,
-                   weight = 80
-               )
-           ),
-           pagination = Pagination(
-               count = 1,
-               current_page = 1,
-               has_more = false,
-               next_page = "",
-               per_page = 10
-           )
-       )
+        val mockResponse = PlayerResponse(
+            players = listOf(
+                Player(
+                    displayName = "Player 1",
+                    firstname = "Player",
+                    gender = "Male",
+                    height = 180,
+                    id = 1,
+                    imagePath = "https://example.com/player1.jpg",
+                    lastname = "1",
+                    name = "Player 1",
+                    weight = 80
+                )
+            ),
+            pagination = Pagination(
+                count = 1,
+                currentPage = 1,
+                hasMore = false,
+                nextPage = "",
+                perPage = 10
+            )
+        )
 
         coEvery { apiService.getPlayers(page = 1) } returns mockResponse
         val result = playerRepository.getPlayers(page = 1).toList()
         assert(result.size == 2)
-        assertTrue {result[0] is Resource.Loading }
-        assertTrue {result[1] is Resource.Success }
+        assertTrue { result[0] is Resource.Loading }
+        assertTrue { result[1] is Resource.Success }
         val players = (result[1] as Resource.Success).data
-        assertEquals("Player 1", players!!.first[0].common_name)
-        assertEquals(false, players!!.second.has_more)
+        assertEquals("Player 1", players!!.first[0].displayName)
+        assertEquals(false, players.second.hasMore)
     }
 
     @Test

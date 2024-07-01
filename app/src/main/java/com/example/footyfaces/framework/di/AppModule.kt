@@ -2,7 +2,12 @@ package com.example.footyfaces.framework.di
 
 import android.content.Context
 import com.example.footyfaces.BuildConfig
+import com.example.footyfaces.data.NetworkConstants
 import com.example.footyfaces.data.remote.ApiService
+import com.example.footyfaces.data.repository.PlayerRepositoryImpl
+import com.example.footyfaces.domain.repository.PlayerRepository
+import com.example.footyfaces.domain.usecase.GetPlayers
+import com.example.footyfaces.domain.usecase.GetPlayersImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +24,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+object AppModule {
 
     @Provides
     @Singleton
@@ -84,7 +89,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
-            .baseUrl("https://api.sportmonks.com/")
+            .baseUrl(NetworkConstants.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -93,5 +98,17 @@ object NetworkModule {
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService =
         retrofit.create(ApiService::class.java)
+
+    @Provides
+    @Singleton
+    fun providePlayerRepository(apiService: ApiService): PlayerRepository {
+        return PlayerRepositoryImpl(apiService)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetPlayers(playerRepository: PlayerRepository): GetPlayers {
+        return GetPlayersImpl(playerRepository)
+    }
 
 }

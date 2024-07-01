@@ -23,7 +23,8 @@ fun PlayerImage(
         model = url,
         contentDescription = contentDescription,
         modifier = modifier,
-        contentScale = contentScale)
+        contentScale = contentScale
+    )
 }
 
 fun getFullImageUrl(relativeUrl: String): String {

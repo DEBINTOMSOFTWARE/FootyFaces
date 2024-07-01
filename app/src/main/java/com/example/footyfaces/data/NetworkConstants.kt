@@ -1,7 +1,5 @@
 package com.example.footyfaces.data
 
-import androidx.fragment.app.FragmentManager.BackStackEntry
-
 object NetworkConstants {
 
     const val BASE_URL = "https://api.sportmonks.com/"
