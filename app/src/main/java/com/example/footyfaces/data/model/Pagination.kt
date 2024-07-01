@@ -1,9 +1,9 @@
 package com.example.footyfaces.data.model
 
 data class Pagination(
-    val count: Int?,
-    val current_page: Int?,
-    val has_more: Boolean?,
-    val next_page: String?,
-    val per_page: Int?
+    val count: Int? = null,
+    val current_page: Int? = null,
+    val has_more: Boolean? = null,
+    val next_page: String? = null,
+    val per_page: Int? = null
 )

@@ -83,9 +83,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.material)
-
     implementation(libs.androidx.material)
-
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.navigation.compose)
@@ -97,8 +95,6 @@ dependencies {
     implementation(libs.convertor.gson)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     testImplementation(libs.kotlin.test.junit)

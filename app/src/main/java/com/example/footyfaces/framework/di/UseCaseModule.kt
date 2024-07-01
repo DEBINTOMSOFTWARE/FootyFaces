@@ -1,5 +1,6 @@
 package com.example.footyfaces.framework.di
 
+import android.util.Log
 import com.example.footyfaces.domain.usecase.GetPlayers
 import com.example.footyfaces.domain.usecase.GetPlayersImpl
 import dagger.Binds
@@ -11,6 +12,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class UseCaseModule {
+
+    init {
+        Log.d("Hilt", "UseCaseModule created")
+    }
 
     @Binds
     @Singleton
