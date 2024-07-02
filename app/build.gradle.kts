@@ -94,6 +94,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.convertor.gson)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.tracing)
     kapt(libs.hilt.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -110,4 +111,6 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    androidTestImplementation(libs.testRunner)
+
 }

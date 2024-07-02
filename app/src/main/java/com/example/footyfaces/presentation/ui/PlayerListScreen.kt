@@ -93,6 +93,7 @@ fun PlayerListScreen(
             }
 
             when {
+
                 uiState.error != null -> {
                     Text(text = uiState.error!!)
                 }
@@ -136,7 +137,9 @@ fun showPlayersGrid(
         }
         if (isLoading) {
             item {
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    modifier = Modifier.semantics { contentDescription = "Loading Progress" }
+                )
             }
         }
     }
