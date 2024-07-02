@@ -15,6 +15,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
+import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,6 +27,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideCertificatePinner(): CertificatePinner =
+        CertificatePinner.Builder()
+            .add("api.sportmonks.com", "sha256/GHI9ahaGhb8D93oYKqYns185/j2vRP91WgSKO8+1nrA=")
+            .build()
 
     @Provides
     @Singleton
@@ -74,12 +82,14 @@ object AppModule {
     @Singleton
     fun provideIkHttpClient(
         cache: Cache,
+        certificatePinner: CertificatePinner,
         @Named("onlineInterceptor") onlineInterceptor: Interceptor,
         @Named("apiKeyInterceptor") apiKeyInterceptor: Interceptor,
         loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
             .cache(cache)
+            .certificatePinner(certificatePinner)
             .addNetworkInterceptor(onlineInterceptor)
             .addInterceptor(apiKeyInterceptor)
             .addInterceptor(loggingInterceptor)

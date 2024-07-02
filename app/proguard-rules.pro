@@ -19,3 +19,45 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keep class androidx.compose.** { *; }
+
+# Keep classes that use Compose's @Composable annotation
+-keep @androidx.compose.runtime.Composable class * {
+    <methods>;
+}
+
+# Keep ViewModel classes to prevent issues with saved state
+-keep class * extends androidx.lifecycle.ViewModel {
+    <init>(...);
+}
+
+-keep class com.example.footyfaces.data.model.** { *;}
+-keep class com.example.footyfaces.data.mapper.** { *;}
+-keep class com.example.footyfaces.data.remote.** { *;}
+-keep class com.example.footyfaces.data.repository.** { *;}
+-keep class com.example.footyfaces.data.** { *;}
+
+-keep class com.example.footyfaces.domain.repository.** { *;}
+-keep class com.example.footyfaces.domain.model.** { *;}
+-keep class com.example.footyfaces.domain.usecases.** { *;}
+
+-keep class com.example.footyfaces.framework.connectivity.** { *;}
+-keep class com.example.footyfaces.framework.di.** { *;}
+
+-keep class com.example.footyfaces.presentation.intent.** { *;}
+-keep class com.example.footyfaces.presentation.components.** { *;}
+-keep class com.example.footyfaces.presentation.ui.** { *;}
+-keep class com.example.footyfaces.presentation.viewmodel.** { *;}
+
+-keep class com.example.footyfaces.MainActivity {
+    public <fields>;
+    public <methods>;
+}
+
+-keep class com.example.footyfaces.data.model.**{
+ private <fields>;
+}
+
+-keep class com.example.footyfaces.domain.model.**{
+ private <fields>;
+}
