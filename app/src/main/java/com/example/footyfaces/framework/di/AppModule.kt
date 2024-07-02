@@ -8,6 +8,7 @@ import com.example.footyfaces.data.repository.PlayerRepositoryImpl
 import com.example.footyfaces.domain.repository.PlayerRepository
 import com.example.footyfaces.domain.usecase.GetPlayers
 import com.example.footyfaces.domain.usecase.GetPlayersImpl
+import com.example.footyfaces.framework.connectivity.ConnectivityMonitor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -110,5 +111,10 @@ object AppModule {
     fun provideGetPlayers(playerRepository: PlayerRepository): GetPlayers {
         return GetPlayersImpl(playerRepository)
     }
+
+    @Provides
+    @Singleton
+    fun provideConnectivityManager(@ApplicationContext context: Context) =
+        ConnectivityMonitor.getInstance(context)
 
 }

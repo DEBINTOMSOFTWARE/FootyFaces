@@ -32,14 +32,15 @@ fun BodyExtraLargeText(
     text: String,
     modifier: Modifier = Modifier,
     color: Color = MaterialTheme.colorScheme.surface,
-    fontSize: Int = 20
+    fontSize: Int = 20,
+    fontWeight: FontWeight = FontWeight.Bold
 ) {
     Text(
         text = text,
         modifier = modifier,
         color = color,
         fontSize = fontSize.sp,
-        fontWeight = FontWeight.Normal,
+        fontWeight = fontWeight,
         lineHeight = 20.sp,
         overflow = TextOverflow.Ellipsis,
         maxLines = 3

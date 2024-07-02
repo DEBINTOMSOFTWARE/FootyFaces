@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.footyfaces.domain.model.PaginationEntity
 import com.example.footyfaces.domain.model.PlayerEntity
 import com.example.footyfaces.domain.usecase.GetPlayers
+import com.example.footyfaces.framework.connectivity.ConnectivityMonitor
 import com.example.footyfaces.presentation.intent.PlayerIntent
 import com.example.footyfaces.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +19,10 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class PlayersViewModel @Inject constructor(private val getPlayersUseCase: GetPlayers) :
-    ViewModel() {
+class PlayersViewModel @Inject constructor(
+    private val getPlayersUseCase: GetPlayers,
+    connectivityMonitor: ConnectivityMonitor
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(PlayerUiState())
     val uiState: StateFlow<PlayerUiState> = _uiState
@@ -28,6 +31,8 @@ class PlayersViewModel @Inject constructor(private val getPlayersUseCase: GetPla
     val intent: SharedFlow<PlayerIntent> = _intent
 
     private val allPlayers = mutableListOf<PlayerEntity>()
+    val networkAvailable = connectivityMonitor
+
 
     init {
         processIntents()

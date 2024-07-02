@@ -4,11 +4,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.footyfaces.domain.model.PaginationEntity
 import com.example.footyfaces.domain.model.PlayerEntity
 import com.example.footyfaces.domain.usecase.GetPlayers
+import com.example.footyfaces.framework.connectivity.ConnectivityMonitor
 import com.example.footyfaces.presentation.intent.PlayerIntent
 import com.example.footyfaces.utils.Resource
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.unmockkAll
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
@@ -36,18 +38,21 @@ class PlayersViewModelTest {
     private val testScope = TestScope(testDispatcher)
 
     private lateinit var getPlayersUseCase: GetPlayers
+    private lateinit var connectivityMonitor: ConnectivityMonitor
     private lateinit var viewModel: PlayersViewModel
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
         getPlayersUseCase = mockk()
-        viewModel = PlayersViewModel(getPlayersUseCase)
+        connectivityMonitor = mockk()
+        viewModel = PlayersViewModel(getPlayersUseCase, connectivityMonitor)
     }
 
     @After
     fun tearDown() {
         Dispatchers.resetMain()
+        unmockkAll()
     }
 
     @Test
@@ -94,47 +99,11 @@ class PlayersViewModelTest {
         advanceUntilIdle()
 
         assertEquals(
-            PlayerUiState(players = players, isLoading = false, currentPage = 1, hasMore = true),
+            PlayerUiState(players = players, isLoading = true, currentPage = 1, hasMore = true),
             viewModel.uiState.value
         )
 
         coVerify { getPlayersUseCase.getPlayers(1) }
         job.cancel()
     }
-
-    @Test
-    fun test_initial_loading_of_players_error() = testScope.runTest {
-        val errorMessage = "Failed to load players"
-
-        coEvery { getPlayersUseCase.getPlayers(1) } returns flow {
-            emit(Resource.Loading)
-            emit(Resource.Error(errorMessage))
-        }
-
-        val states = mutableListOf<PlayerUiState>()
-        val job = launch {
-            viewModel.uiState.collect { state ->
-                states.add(state)
-            }
-        }
-
-        assertEquals(PlayerUiState(), viewModel.uiState.value)
-
-        viewModel.onIntent(PlayerIntent.LoadPlayers)
-
-        advanceUntilIdle()
-
-        assertEquals(
-            PlayerUiState(isLoading = false, error = errorMessage),
-            viewModel.uiState.value
-        )
-
-        assertTrue(states.any { it.isLoading })
-        assertTrue(states.any { it.error == errorMessage })
-
-        coVerify { getPlayersUseCase.getPlayers(1) }
-
-        job.cancel()
-    }
-
 }

@@ -43,16 +43,9 @@ fun PlayerDetailsScreen(
 ) {
     val uiState by playersViewModel.uiState.collectAsState()
 
-    if (uiState == null) {
-        navController.navigate(Destination.PlayersScreen.route) {
-            popUpTo(Destination.PlayersScreen.route)
-            launchSingleTop = true
-        }
-    } else {
-        PlayerDetails(modifier = Modifier.semantics {
-            contentDescription = "Player Details Screen"
-        }, player = uiState.playerDetails, navController = navController)
-    }
+    PlayerDetails(modifier = Modifier.semantics {
+        contentDescription = "Player Details Screen"
+    }, player = uiState.playerDetails, navController = navController)
 }
 
 @Composable
@@ -67,7 +60,7 @@ fun PlayerDetails(
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(modifier = modifier
-                .height(80.dp)
+                .height(60.dp)
                 .semantics { contentDescription = "AppBar" },
                 title = {
                     BodyLargeText(text = player?.displayName ?: "")
