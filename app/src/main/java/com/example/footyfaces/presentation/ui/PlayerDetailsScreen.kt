@@ -29,7 +29,6 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.footyfaces.Destination
 import com.example.footyfaces.domain.model.PlayerEntity
 import com.example.footyfaces.presentation.components.PlayerInformation
 import com.example.footyfaces.presentation.viewmodel.PlayersViewModel
