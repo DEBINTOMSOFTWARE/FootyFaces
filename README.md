@@ -20,7 +20,8 @@ Accessed by tapping on a player in the grid view.
 Shows detailed information about the selected player.
 Users can return to the Players List Screen by tapping the back arrow in the app bar.
 
-Features
+Features:
+
 Grid view display of players with images and names.
 Detailed player information on selection.
 Pagination for smooth loading of additional players.
