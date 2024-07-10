@@ -1,6 +1,5 @@
 package com.example.footyfaces.data.repository
 
-import androidx.compose.runtime.mutableStateOf
 import coil.network.HttpException
 import com.example.footyfaces.data.mapper.toDomain
 import com.example.footyfaces.data.remote.ApiService
@@ -9,21 +8,17 @@ import com.example.footyfaces.domain.model.PlayerEntity
 import com.example.footyfaces.domain.repository.PlayerRepository
 import com.example.footyfaces.utils.Resource
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
 import javax.inject.Inject
 
 class PlayerRepositoryImpl @Inject constructor(private val apiService: ApiService) : PlayerRepository {
-    private val playersState = MutableStateFlow<List<PlayerEntity>>(emptyList())
-    private val playerDetails = mutableStateOf<PlayerEntity?>(null)
 
     override fun getPlayers(page: Int): Flow<Resource<Pair<List<PlayerEntity>, PaginationEntity>>> = flow {
         emit(Resource.Loading)
         try {
             val response = apiService.getPlayers(page)
             val (players, pagination) = response.toDomain()
-            playersState.value = players
             emit(Resource.Success(Pair(players, pagination)))
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An error occurred"))

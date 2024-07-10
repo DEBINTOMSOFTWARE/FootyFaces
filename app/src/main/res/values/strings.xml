@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">FootyFaces</string>
+    <string name="network_unavailable_label">Network unavailable</string>
+    <string name="loading_progress_label">Loading Progress</string>
+    <string name="players_list_label">Players List</string>
+    <string name="player_details_screen_label">Player Details Screen</string>
+    <string name="go_back_label">Go back</string>
+    <string name="player_information_label">Player Information</string>
+    <string name="name_label">Name</string>
+    <string name="dob_label">Date of birth</string>
+    <string name="gender_label">Gender</string>
+    <string name="height_label">Height</string>
+    <string name="weight_label">Weight</string>
+    <string name="cm_label">cm</string>
+    <string name="kg_label">kg</string>
 </resources>

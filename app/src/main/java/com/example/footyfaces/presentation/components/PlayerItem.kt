@@ -21,12 +21,15 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.footyfaces.Destination
+import com.example.footyfaces.R
 import com.example.footyfaces.domain.model.PlayerEntity
 import com.example.footyfaces.presentation.intent.PlayerIntent
 import com.example.footyfaces.presentation.viewmodel.PlayersViewModel
 import com.example.footyfaces.utils.PlayerImage
+import com.example.footyfaces.utils.dimenResource
 import com.example.footyfaces.utils.getFullImageUrl
 
 @Composable
@@ -39,9 +42,9 @@ fun PlayerItem(
         horizontalAlignment = Alignment.Start,
         modifier = Modifier
             .fillMaxWidth()
-            .border(width = 1.dp, color = Color.LightGray)
+            .border(width = 0.dp, color = Color.LightGray)
             .background(Color.White)
-            .padding(16.dp)
+            .padding(dimenResource(id = R.dimen.padding_medium).dp)
             .clickable {
                 if (player.id != null) {
                     navController.navigate(Destination.PlayerDetailsScreen.createRoute(player.id))
@@ -56,8 +59,8 @@ fun PlayerItem(
         PlayerImage(
             url = getFullImageUrl(player.imagePath ?: ""),
             modifier = Modifier
-                .padding(4.dp)
-                .height(120.dp)
+                .padding(dimenResource(id = R.dimen.padding_extra_small).dp)
+                .height(dimenResource(id = R.dimen.player_item_image_height).dp)
                 .fillMaxWidth()
                 .aspectRatio(1f),
             contentDescription = "${player.displayName}",
@@ -65,8 +68,8 @@ fun PlayerItem(
         )
         BodySmallText(
             text = player.displayName ?: "",
-            modifier = Modifier.padding(top = 16.dp),
-            fontSize = 12,
+            modifier = Modifier.padding(top = dimenResource(id = R.dimen.padding_medium).dp),
+            fontSize = dimenResource(id = R.dimen.font_size_small).sp,
             textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurface,
         )

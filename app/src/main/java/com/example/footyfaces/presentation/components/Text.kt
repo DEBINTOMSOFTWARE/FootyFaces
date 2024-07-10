@@ -6,83 +6,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-
-@Composable
-fun HeaderLargeText(
-    text: String,
-    modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.surface,
-    fontSize: Int = 24,
-    fontWeight: FontWeight = FontWeight.Bold
-) {
-    Text(
-        text = text,
-        modifier = modifier,
-        color = color,
-        fontSize = fontSize.sp,
-        fontWeight = fontWeight,
-        overflow = TextOverflow.Ellipsis,
-        maxLines = 1
-    )
-}
-
-@Composable
-fun BodyExtraLargeText(
-    text: String,
-    modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.surface,
-    fontSize: Int = 20,
-    fontWeight: FontWeight = FontWeight.Bold
-) {
-    Text(
-        text = text,
-        modifier = modifier,
-        color = color,
-        fontSize = fontSize.sp,
-        fontWeight = fontWeight,
-        lineHeight = 20.sp,
-        overflow = TextOverflow.Ellipsis,
-        maxLines = 3
-    )
-}
-
-@Composable
-fun BodyLargeText(
-    text: String,
-    modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.surface,
-    fontSize: Int = 16,
-    fontWeight: FontWeight = FontWeight.Normal
-) {
-    Text(
-        text = text,
-        modifier = modifier,
-        color = color,
-        fontSize = fontSize.sp,
-        fontWeight = fontWeight,
-        lineHeight = 20.sp,
-        overflow = TextOverflow.Ellipsis,
-        maxLines = 3
-    )
-}
+import com.example.footyfaces.R
+import com.example.footyfaces.utils.dimenResource
+import org.w3c.dom.Text
 
 @Composable
 fun BodyText(
     text: String,
     modifier: Modifier = Modifier,
     textAlign: TextAlign = TextAlign.End,
-    color: Color = MaterialTheme.colorScheme.onSurface,
-    fontSize: Int = 14
+    color: Color = MaterialTheme.colorScheme.surface,
+    fontSize: TextUnit = dimenResource(id = R.dimen.font_size_normal).sp
 ) {
     Text(
         text = text,
         modifier = modifier,
         color = color,
-        fontSize = fontSize.sp,
+        fontSize = fontSize,
         textAlign = textAlign,
         fontWeight = FontWeight.Normal,
-        lineHeight = 20.sp,
+        lineHeight = dimenResource(id = R.dimen.line_height).sp,
         overflow = TextOverflow.Ellipsis,
         maxLines = 3
     )
@@ -95,16 +40,16 @@ fun BodySmallText(
     textAlign: TextAlign = TextAlign.Start,
     color: Color = MaterialTheme.colorScheme.onSurface,
     fontWeight: FontWeight = FontWeight.Normal,
-    fontSize: Int = 12
+    fontSize: TextUnit = dimenResource(id = R.dimen.font_size_small).sp
 ) {
     Text(
         text = text,
         modifier = modifier,
         color = color,
-        fontSize = fontSize.sp,
+        fontSize = fontSize,
         textAlign = textAlign,
         fontWeight = fontWeight,
-        lineHeight = 20.sp,
+        lineHeight = dimenResource(id = R.dimen.line_height).sp,
         overflow = TextOverflow.Ellipsis,
         maxLines = 3
     )

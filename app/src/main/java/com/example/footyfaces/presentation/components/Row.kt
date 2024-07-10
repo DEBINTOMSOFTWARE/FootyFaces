@@ -8,20 +8,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.footyfaces.R
+import com.example.footyfaces.utils.dimenResource
 
 @Composable
 fun CustomRow(
     startText: String,
     endContent: @Composable (() -> Unit)? = null,
-    fontSize: Int = 12
+    fontSize: TextUnit = dimenResource(id = R.dimen.font_size_extra_small).sp
 ) {
     Column {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .semantics(mergeDescendants = true) {}
-                .padding(16.dp), // Adjust padding as needed
+                .padding(dimenResource(id = R.dimen.padding_small).dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             BodySmallText(
@@ -33,6 +37,6 @@ fun CustomRow(
             endContent?.invoke() ?: Spacer(modifier = Modifier.weight(1f))
         }
 
-        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+        HorizontalDivider(modifier = Modifier.padding(horizontal = dimenResource(id = R.dimen.padding_small).dp))
     }
 }

@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName
 
 data class Player(
     @SerializedName("date_of_birth")
-    val dateOfBirth: String? = null,
+    val dateOfBirth: String,
     @SerializedName("display_name")
-    val displayName: String? = null,
-    val firstname: String? = null,
-    val gender: String? = null,
-    val height: Int? = null,
-    val id: Int? = null,
+    val displayName: String,
+    val firstname: String,
+    val gender: String,
+    val height: Int,
+    val id: Int,
     @SerializedName("image_path")
-    val imagePath: String? = null,
-    val lastname: String? = null,
-    val name: String? = null,
-    val weight: Int? = null
+    val imagePath: String,
+    val lastname: String,
+    val name: String,
+    val weight: Int
 )

@@ -3,6 +3,7 @@ package com.example.footyfaces.utils
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import coil.compose.AsyncImage
 
 sealed class Resource<out T> {
@@ -26,12 +27,19 @@ fun PlayerImage(
     )
 }
 
+@Composable
+fun dimenResource(id: Int): Float {
+    val context = LocalContext.current
+    return context.resources.getDimension(id)
+}
+
 fun getFullImageUrl(relativeUrl: String): String {
     if (!relativeUrl.startsWith("http://") && !relativeUrl.startsWith("https://")) {
         return "https:$relativeUrl"
     }
     return relativeUrl
 }
+
 
 open class SingletonHolder<out T: Any, in A>(creator: (A) -> T) {
     private var creator: ((A) -> T)? = creator

@@ -1,7 +1,6 @@
 package com.example.footyfaces.presentation.ui
 
-import BodyExtraLargeText
-import BodyLargeText
+import BodyText
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,16 +27,18 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.footyfaces.R
 import com.example.footyfaces.domain.model.PlayerEntity
 import com.example.footyfaces.framework.connectivity.ConnectivityObservable
 import com.example.footyfaces.presentation.components.PlayerItem
 import com.example.footyfaces.presentation.intent.PlayerIntent
 import com.example.footyfaces.presentation.viewmodel.PlayersViewModel
+import com.example.footyfaces.utils.dimenResource
 import kotlinx.coroutines.flow.filter
 
 @Composable
@@ -45,6 +46,8 @@ fun PlayerListScreen(
     playersViewModel: PlayersViewModel,
     navController: NavHostController
 ) {
+    val appBarTitle = stringResource(id = R.string.app_name)
+    val networkUnAvailableLabel = stringResource(id = R.string.network_unavailable_label)
     val uiState by playersViewModel.uiState.collectAsState()
     val networkAvailable =
         playersViewModel.networkAvailable.observe()
@@ -56,10 +59,10 @@ fun PlayerListScreen(
         topBar = {
             TopAppBar(
                 modifier = Modifier
-                    .height(60.dp)
-                    .semantics { contentDescription = "AppBar" },
+                    .height(dimenResource(id = R.dimen.app_bar_height).dp)
+                    .semantics { contentDescription = appBarTitle },
                 title = {
-                    BodyExtraLargeText(text = "Footy Faces", fontSize = 24)
+                    BodyText(text = appBarTitle)
                 },
                 backgroundColor = MaterialTheme.colorScheme.primary,
             )
@@ -83,11 +86,10 @@ fun PlayerListScreen(
                         .background(Color.Red),
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    BodyLargeText(
-                        text = "Network unavailable",
-                        fontWeight = FontWeight.Bold,
+                    BodyText(
+                        text = networkUnAvailableLabel,
                         color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier.padding(dimenResource(id = R.dimen.padding_small).dp)
                     )
                 }
             }
@@ -120,12 +122,14 @@ fun showPlayersGrid(
     playersViewModel: PlayersViewModel,
     navController: NavHostController
 ) {
+    val playersListLabel = stringResource(id = R.string.players_list_label)
+    val loadingProgressLabel = stringResource(id = R.string.loading_progress_label)
     val gridState = rememberLazyGridState()
     LazyVerticalGrid(
         state = gridState,
-        modifier = Modifier.semantics { contentDescription = "Players List" },
+        modifier = Modifier.semantics { contentDescription = playersListLabel },
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(8.dp),
+        contentPadding = PaddingValues(dimenResource(id = R.dimen.padding_small).dp),
     ) {
         items(players.size) { index ->
             val player = players[index]
@@ -138,7 +142,7 @@ fun showPlayersGrid(
         if (isLoading) {
             item {
                 CircularProgressIndicator(
-                    modifier = Modifier.semantics { contentDescription = "Loading Progress" }
+                    modifier = Modifier.semantics { contentDescription = loadingProgressLabel }
                 )
             }
         }
