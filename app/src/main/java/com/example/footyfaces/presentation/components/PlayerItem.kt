@@ -45,10 +45,8 @@ fun PlayerItem(
             .background(Color.White)
             .padding(dimenResource(id = R.dimen.padding_medium).dp)
             .clickable {
-                if (player.id != null) {
-                    navController.navigate(Destination.PlayerDetailsScreen.createRoute(player.id))
-                    playersViewModel.onIntent(PlayerIntent.LoadPlayerDetails(player.id))
-                }
+                navController.navigate(Destination.PlayerDetailsScreen.createRoute(player.id))
+                playersViewModel.onIntent(PlayerIntent.LoadPlayerDetails(player.id))
             }
             .semantics {
                 role = Role.Button

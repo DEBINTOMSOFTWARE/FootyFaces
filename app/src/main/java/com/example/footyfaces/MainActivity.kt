@@ -36,7 +36,6 @@ class MainActivity : ComponentActivity() {
                 AppNavigation(
                     playersViewModel = playersViewModel,
                     navController = rememberNavController(),
-                    exit = { finish() }
                 )
             }
         }
@@ -47,7 +46,6 @@ class MainActivity : ComponentActivity() {
 fun AppNavigation(
     playersViewModel: PlayersViewModel,
     navController: NavHostController,
-    exit: () -> Unit
 ) {
     NavHost(navController = navController, startDestination = Destination.PlayersScreen.route) {
         composable(Destination.PlayersScreen.route) {
