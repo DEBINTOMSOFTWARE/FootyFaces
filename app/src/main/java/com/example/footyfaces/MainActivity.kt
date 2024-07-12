@@ -28,14 +28,15 @@ sealed class Destination(val route: String) {
 class MainActivity : ComponentActivity() {
 
     private val playersViewModel: PlayersViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //enableEdgeToEdge()
         setContent {
             FootyFacesTheme {
                 AppNavigation(
                     playersViewModel = playersViewModel,
-                    navController = rememberNavController()
+                    navController = rememberNavController(),
+                    exit = { finish() }
                 )
             }
         }
@@ -45,7 +46,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation(
     playersViewModel: PlayersViewModel,
-    navController: NavHostController
+    navController: NavHostController,
+    exit: () -> Unit
 ) {
     NavHost(navController = navController, startDestination = Destination.PlayersScreen.route) {
         composable(Destination.PlayersScreen.route) {

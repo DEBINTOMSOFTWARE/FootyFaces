@@ -11,6 +11,6 @@ class GetPlayersImpl @Inject constructor(
     private val playerRepository: PlayerRepository
 ) : GetPlayers {
     override fun getPlayers(page: Int): Flow<Resource<Pair<List<PlayerEntity>, PaginationEntity>>> {
-      return playerRepository.getPlayers(page)
+        return playerRepository.getPlayers(page)
     }
 }

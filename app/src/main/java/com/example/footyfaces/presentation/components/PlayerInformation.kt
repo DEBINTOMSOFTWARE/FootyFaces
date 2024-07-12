@@ -1,7 +1,5 @@
 package com.example.footyfaces.presentation.components
 
-import BodySmallText
-import CustomRow
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -42,7 +40,10 @@ fun PlayerInformation(
             fontSize = dimenResource(id = R.dimen.font_size_normal).sp
         )
         CustomRow(startText = nameLabel, endContent = {
-            BodySmallText(text = player?.name ?: "", fontSize = dimenResource(id = R.dimen.font_size_extra_small).sp)
+            BodySmallText(
+                text = player?.name ?: "",
+                fontSize = dimenResource(id = R.dimen.font_size_extra_small).sp
+            )
         })
         CustomRow(startText = dateOfBirthLabel, endContent = {
             BodySmallText(

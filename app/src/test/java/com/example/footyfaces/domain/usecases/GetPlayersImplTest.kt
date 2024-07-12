@@ -1,5 +1,6 @@
 package com.example.footyfaces.domain.usecases
 
+import com.example.footyfaces.TestConstants
 import com.example.footyfaces.domain.model.PaginationEntity
 import com.example.footyfaces.domain.model.PlayerEntity
 import com.example.footyfaces.domain.repository.PlayerRepository
@@ -26,38 +27,39 @@ class GetPlayersImplTest {
     }
 
     @Test
-    fun getPlayers_usecase_fetches_data_from_repository() = runTest {
+    fun givenRepositoryReturnsPlayers_whenGetPlayers_thenReturnsPlayersAndPagination() = runTest {
         val mockResponse: Flow<Resource<Pair<List<PlayerEntity>, PaginationEntity>>> = flow {
             val players = listOf(
                 PlayerEntity(
-                    displayName = "Player 1",
-                    firstname = "Player",
-                    gender = "Male",
-                    height = 180,
-                    id = 1,
-                    imagePath = "https://example.com/player1.jpg",
-                    lastname = "1",
-                    name = "Player 1",
-                    weight = 80
+                    dateOfBirth = TestConstants.PLAYER_DOB,
+                    displayName = TestConstants.PLAYER_NAME,
+                    firstname = TestConstants.PLAYER_FIRSTNAME,
+                    gender = TestConstants.PLAYER_GENDER,
+                    height = TestConstants.PLAYER_HEIGHT,
+                    id = TestConstants.PLAYER_ID,
+                    imagePath = TestConstants.PLAYER_IMAGE_PATH,
+                    lastname = TestConstants.PLAYER_LASTNAME,
+                    name = TestConstants.PLAYER_NAME,
+                    weight = TestConstants.PLAYER_WEIGHT
                 )
             )
 
             val pagination = PaginationEntity(
-                count = 1,
-                currentPage = 1,
-                hasMore = false,
-                nextPage = "",
-                perPage = 10
+                count = TestConstants.PAGINATION_COUNT,
+                currentPage = TestConstants.PAGINATION_CURRENT_PAGE,
+                hasMore = TestConstants.PAGINATION_HAS_MORE,
+                nextPage = TestConstants.PAGINATION_NEXT_PAGE,
+                perPage = TestConstants.PAGINATION_PER_PAGE
             )
             emit(Resource.Success(Pair(players, pagination)))
         }
 
-        coEvery { repository.getPlayers(page = 1) } returns mockResponse
-        val result = getPlayersImpl.getPlayers(page = 1)
+        coEvery { repository.getPlayers(page = TestConstants.PAGE) } returns mockResponse
+        val result = getPlayersImpl.getPlayers(page = TestConstants.PAGE)
         result.collect {
             assert(it is Resource.Success)
-            assertTrue { (it as Resource.Success).data!!.first[0].displayName == "Player 1" }
-            assertTrue { (it as Resource.Success).data!!.second.hasMore == false }
+            assertTrue { (it as Resource.Success).data!!.first[0].displayName == TestConstants.PLAYER_NAME }
+            assertTrue { (it as Resource.Success).data!!.second.hasMore == TestConstants.PAGINATION_HAS_MORE }
         }
     }
 

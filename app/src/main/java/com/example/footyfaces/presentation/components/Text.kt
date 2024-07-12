@@ -1,3 +1,5 @@
+package com.example.footyfaces.presentation.components
+
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -10,7 +12,25 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.example.footyfaces.R
 import com.example.footyfaces.utils.dimenResource
-import org.w3c.dom.Text
+
+@Composable
+fun HeaderText(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colorScheme.onSurface,
+    fontSize: TextUnit = dimenResource(id = R.dimen.font_size_medium).sp,
+    fontWeight: FontWeight = FontWeight.Bold
+) {
+    Text(
+        text = text,
+        modifier = modifier,
+        color = color,
+        fontSize = fontSize,
+        fontWeight = fontWeight,
+        overflow = TextOverflow.Ellipsis,
+        maxLines = 2
+    )
+}
 
 @Composable
 fun BodyText(

@@ -6,5 +6,5 @@ import com.example.footyfaces.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface PlayerRepository {
-     fun getPlayers(page: Int): Flow<Resource<Pair<List<PlayerEntity>, PaginationEntity>>>
+    fun getPlayers(page: Int): Flow<Resource<Pair<List<PlayerEntity>, PaginationEntity>>>
 }

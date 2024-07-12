@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">FootyFaces</string>
-    <string name="network_unavailable_label">Network unavailable</string>
+
     <string name="loading_progress_label">Loading Progress</string>
     <string name="players_list_label">Players List</string>
     <string name="player_details_screen_label">Player Details Screen</string>
@@ -13,4 +13,15 @@
     <string name="weight_label">Weight</string>
     <string name="cm_label">cm</string>
     <string name="kg_label">kg</string>
+    <string name="unknown_error_label">An unknown error occurred</string>
+    <string name="unknown_error_user_action_label">We\'re not sure what happened, but we\'re working on getting it fixed as soon as possible.</string>
+    <string name="player_not_found_label">The information you\'re looking for isn\'t available.</string>
+    <string name="player_not_found_user_action_label">Please check the URL or try searching for what you need.</string>
+    <string name="access_denied_label">You don\'t have permission to access this resource.</string>
+    <string name="access_denied_user_action_label">Please contact your system administrator.</string>
+    <string name="service_unavailable_label">We\'re currently experiencing technical difficulties.</string>
+    <string name="service_unavailable_user_action_label">Please try again later.</string>
+    <string name="network_unavailable_label">Looks like you\'re offline.</string>
+    <string name="network_unavailable_user_action_label">Please check your internet connection.</string>
+
 </resources>

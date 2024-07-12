@@ -1,5 +1,6 @@
 package com.example.footyfaces.data.repository
 
+import com.example.footyfaces.TestConstants
 import com.example.footyfaces.data.model.Pagination
 import com.example.footyfaces.data.model.Player
 import com.example.footyfaces.data.model.PlayerResponse
@@ -29,44 +30,45 @@ class PlayerRepositoryImplTest {
     }
 
     @Test
-    fun getPlayers_returnsPlayersAndPagination() = runTest {
+    fun givenApiServiceReturnsPlayers_whenGetPlayers_thenReturnsPlayersAndPagination() = runTest {
         val mockResponse = PlayerResponse(
             players = listOf(
                 Player(
-                    displayName = "Player 1",
-                    firstname = "Player",
-                    gender = "Male",
-                    height = 180,
-                    id = 1,
-                    imagePath = "https://example.com/player1.jpg",
-                    lastname = "1",
-                    name = "Player 1",
-                    weight = 80
+                    dateOfBirth = TestConstants.PLAYER_DOB,
+                    displayName = TestConstants.PLAYER_NAME,
+                    firstname = TestConstants.PLAYER_FIRSTNAME,
+                    gender = TestConstants.PLAYER_GENDER,
+                    height = TestConstants.PLAYER_HEIGHT,
+                    id = TestConstants.PLAYER_ID,
+                    imagePath = TestConstants.PLAYER_IMAGE_PATH,
+                    lastname = TestConstants.PLAYER_LASTNAME,
+                    name = TestConstants.PLAYER_NAME,
+                    weight = TestConstants.PLAYER_WEIGHT
                 )
             ),
             pagination = Pagination(
-                count = 1,
-                currentPage = 1,
-                hasMore = false,
-                nextPage = "",
-                perPage = 10
+                count = TestConstants.PAGINATION_COUNT,
+                currentPage = TestConstants.PAGINATION_CURRENT_PAGE,
+                hasMore = TestConstants.PAGINATION_HAS_MORE,
+                nextPage = TestConstants.PAGINATION_NEXT_PAGE,
+                perPage = TestConstants.PAGINATION_PER_PAGE
             )
         )
 
-        coEvery { apiService.getPlayers(page = 1) } returns mockResponse
-        val result = playerRepository.getPlayers(page = 1).toList()
+        coEvery { apiService.getPlayers(page = TestConstants.PAGE) } returns mockResponse
+        val result = playerRepository.getPlayers(page = TestConstants.PAGE).toList()
         assert(result.size == 2)
         assertTrue { result[0] is Resource.Loading }
         assertTrue { result[1] is Resource.Success }
         val players = (result[1] as Resource.Success).data
-        assertEquals("Player 1", players!!.first[0].displayName)
-        assertEquals(false, players.second.hasMore)
+        assertEquals(TestConstants.PLAYER_NAME, players!!.first[0].displayName)
+        assertEquals(TestConstants.PAGINATION_HAS_MORE, players.second.hasMore)
     }
 
     @Test
-    fun getPlayers_returnsError() = runTest {
-        coEvery { apiService.getPlayers(page = 1) } throws IOException()
-        val players = playerRepository.getPlayers(page = 1).toList()
+    fun givenApiServiceThrowsIOException_whenGetPlayers_thenReturnsError() = runTest {
+        coEvery { apiService.getPlayers(page = TestConstants.PAGE) } throws IOException()
+        val players = playerRepository.getPlayers(page = TestConstants.PAGE).toList()
         assertTrue { players[0] is Resource.Loading }
         assertTrue { players[1] is Resource.Error }
     }

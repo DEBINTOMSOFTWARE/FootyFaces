@@ -7,6 +7,7 @@ import com.example.footyfaces.domain.model.PlayerEntity
 import com.example.footyfaces.domain.usecase.GetPlayers
 import com.example.footyfaces.framework.connectivity.ConnectivityMonitor
 import com.example.footyfaces.presentation.intent.PlayerIntent
+import com.example.footyfaces.utils.ErrorEntity
 import com.example.footyfaces.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +29,7 @@ class PlayersViewModel @Inject constructor(
     val uiState: StateFlow<PlayerUiState> = _uiState
 
     private val _intent = MutableSharedFlow<PlayerIntent>()
-    val intent: SharedFlow<PlayerIntent> = _intent
+    private val intent: SharedFlow<PlayerIntent> = _intent
 
     private val allPlayers = mutableListOf<PlayerEntity>()
     val networkAvailable = connectivityMonitor
@@ -39,6 +40,11 @@ class PlayersViewModel @Inject constructor(
         viewModelScope.launch {
             onIntent(PlayerIntent.LoadPlayers)
         }
+    }
+
+    fun onExit() {
+        println("On Exit Called")
+        _uiState.value = _uiState.value.copy(exit = true, error = null)
     }
 
     fun onIntent(playerIntent: PlayerIntent) {
@@ -79,15 +85,13 @@ class PlayersViewModel @Inject constructor(
                                 players = players,
                                 isLoading = false,
                                 error = null,
-                                currentPage = pagination.currentPage ?: 1,
-                                hasMore = pagination.hasMore ?: true
+                                currentPage = pagination.currentPage,
+                                hasMore = pagination.hasMore
                             )
                         }
 
                         is Resource.Error -> _uiState.value =
-                            _uiState.value.copy(isLoading = false, error = resource.message)
-
-                        else -> Unit
+                            _uiState.value.copy(isLoading = false, error = resource.error)
                     }
                 }
             }
@@ -113,15 +117,14 @@ class PlayersViewModel @Inject constructor(
                                 players = _uiState.value.players + players,
                                 isLoading = false,
                                 error = null,
-                                currentPage = pagination.currentPage ?: 1,
-                                hasMore = pagination.hasMore ?: false
+                                currentPage = pagination.currentPage,
+                                hasMore = pagination.hasMore
                             )
                         }
 
                         is Resource.Error -> _uiState.value =
-                            _uiState.value.copy(isLoading = false, error = resource.message)
+                            _uiState.value.copy(isLoading = false, error = resource.error)
 
-                        else -> Unit
                     }
                 }
             }
@@ -142,8 +145,9 @@ class PlayersViewModel @Inject constructor(
 data class PlayerUiState(
     val players: List<PlayerEntity> = emptyList(),
     val isLoading: Boolean = false,
-    val error: String? = null,
+    val error: ErrorEntity? = null,
     val currentPage: Int = 1,
     val hasMore: Boolean = true,
-    val playerDetails: PlayerEntity? = null
+    val playerDetails: PlayerEntity? = null,
+    val exit: Boolean = false
 )

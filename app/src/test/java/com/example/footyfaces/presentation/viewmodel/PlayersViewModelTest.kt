@@ -1,6 +1,7 @@
 package com.example.footyfaces.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.footyfaces.TestConstants
 import com.example.footyfaces.domain.model.PaginationEntity
 import com.example.footyfaces.domain.model.PlayerEntity
 import com.example.footyfaces.domain.usecase.GetPlayers
@@ -55,31 +56,31 @@ class PlayersViewModelTest {
     }
 
     @Test
-    fun test_initial_loading_of_players() = testScope.runTest {
+    fun givenViewModel_whenLoadPlayers_thenUpdatesUiState() = testScope.runTest {
         val players = listOf(
             PlayerEntity(
-                displayName = "Player 1",
-                firstname = "Player",
-                gender = "Male",
-                height = 180,
-                id = 1,
-                imagePath = "https://example.com/player1.jpg",
-                lastname = "1",
-                name = "Player 1",
-                weight = 80
+                dateOfBirth = TestConstants.PLAYER_DOB,
+                displayName = TestConstants.PLAYER_NAME,
+                firstname = TestConstants.PLAYER_FIRSTNAME,
+                gender = TestConstants.PLAYER_GENDER,
+                height = TestConstants.PLAYER_HEIGHT,
+                id = TestConstants.PLAYER_ID,
+                imagePath = TestConstants.PLAYER_IMAGE_PATH,
+                lastname = TestConstants.PLAYER_LASTNAME,
+                name = TestConstants.PLAYER_NAME,
+                weight = TestConstants.PLAYER_WEIGHT
             )
         )
 
         val pagination = PaginationEntity(
-            count = 1,
-            currentPage = 1,
-            hasMore = true,
-            nextPage = "",
-            perPage = 10
+            count = TestConstants.PAGINATION_COUNT,
+            currentPage = TestConstants.PAGINATION_CURRENT_PAGE,
+            hasMore = TestConstants.PAGINATION_HAS_MORE,
+            nextPage = TestConstants.PAGINATION_NEXT_PAGE,
+            perPage = TestConstants.PAGINATION_PER_PAGE
         )
 
-        coEvery { getPlayersUseCase.getPlayers(1) } returns flow {
-            emit(Resource.Loading)
+        coEvery { getPlayersUseCase.getPlayers(TestConstants.PAGE) } returns flow {
             emit(Resource.Success(Pair(players, pagination)))
         }
 
@@ -87,7 +88,6 @@ class PlayersViewModelTest {
         val job = launch {
             viewModel.uiState.collect { state ->
                 states.add(state)
-
             }
         }
 
@@ -98,11 +98,16 @@ class PlayersViewModelTest {
         advanceUntilIdle()
 
         assertEquals(
-            PlayerUiState(players = players, isLoading = true, currentPage = 1, hasMore = true),
+            PlayerUiState(
+                players = players,
+                isLoading = false,
+                currentPage = TestConstants.PAGE,
+                hasMore = TestConstants.PAGINATION_HAS_MORE
+            ),
             viewModel.uiState.value
         )
 
-        coVerify { getPlayersUseCase.getPlayers(1) }
+        coVerify { getPlayersUseCase.getPlayers(TestConstants.PAGE) }
         job.cancel()
     }
 }

@@ -1,6 +1,5 @@
 package com.example.footyfaces.presentation.components
 
-import BodySmallText
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -57,17 +56,17 @@ fun PlayerItem(
             }
     ) {
         PlayerImage(
-            url = getFullImageUrl(player.imagePath ?: ""),
+            url = getFullImageUrl(player.imagePath),
             modifier = Modifier
                 .padding(dimenResource(id = R.dimen.padding_extra_small).dp)
                 .height(dimenResource(id = R.dimen.player_item_image_height).dp)
                 .fillMaxWidth()
                 .aspectRatio(1f),
-            contentDescription = "${player.displayName}",
+            contentDescription = player.displayName,
             contentScale = ContentScale.Crop
         )
         BodySmallText(
-            text = player.displayName ?: "",
+            text = player.displayName,
             modifier = Modifier.padding(top = dimenResource(id = R.dimen.padding_medium).dp),
             fontSize = dimenResource(id = R.dimen.font_size_small).sp,
             textAlign = TextAlign.Center,

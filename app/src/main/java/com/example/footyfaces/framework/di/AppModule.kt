@@ -80,7 +80,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideIkHttpClient(
+    fun provideOkHttpClient(
         cache: Cache,
         certificatePinner: CertificatePinner,
         @Named("onlineInterceptor") onlineInterceptor: Interceptor,

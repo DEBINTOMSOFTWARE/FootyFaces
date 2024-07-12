@@ -1,6 +1,6 @@
 package com.example.footyfaces.presentation.ui
 
-import BodyText
+import com.example.footyfaces.presentation.components.BodyText
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -10,14 +10,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -70,7 +70,7 @@ fun PlayerDetails(
                 title = {
                     BodyText(text = player?.displayName ?: "")
                 },
-                backgroundColor = MaterialTheme.colorScheme.primary,
+                backgroundColor = MaterialTheme.colors.primary,
                 navigationIcon = {
                     IconButton(
                         onClick = { navController.navigateUp() },
@@ -79,9 +79,9 @@ fun PlayerDetails(
                             contentDescription = goBackLabel
                         }) {
                         Icon(
-                            Icons.Filled.ArrowBack,
+                            Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.surface
+                            tint = MaterialTheme.colors.surface
                         )
                     }
                 })
@@ -95,7 +95,7 @@ fun PlayerDetails(
                     vertical = paddingValues.calculateTopPadding(),
                     horizontal = paddingValues.calculateBottomPadding()
                 )
-                .background(MaterialTheme.colorScheme.secondary)
+                .background(MaterialTheme.colors.secondary)
 
         ) {
             PlayerImage(

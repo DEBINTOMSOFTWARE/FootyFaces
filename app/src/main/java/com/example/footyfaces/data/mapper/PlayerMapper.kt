@@ -8,16 +8,16 @@ fun PlayerResponse.toDomain(): Pair<List<PlayerEntity>, PaginationEntity> {
     val players = players.map {
         PlayerEntity(
             dateOfBirth = it.dateOfBirth,
-             displayName = it.displayName,
-             firstname = it.firstname,
-             gender = it.gender,
-             height = it.height,
-             id = it.id,
-             imagePath = it.imagePath,
-             lastname = it.lastname,
-             name = it.name,
-             weight = it.weight
-         )
+            displayName = it.displayName,
+            firstname = it.firstname,
+            gender = it.gender,
+            height = it.height,
+            id = it.id,
+            imagePath = it.imagePath,
+            lastname = it.lastname,
+            name = it.name,
+            weight = it.weight
+        )
     }
 
     val pagination = PaginationEntity(
