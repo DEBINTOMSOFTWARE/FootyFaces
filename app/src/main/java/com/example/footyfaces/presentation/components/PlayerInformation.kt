@@ -42,31 +42,31 @@ fun PlayerInformation(
         CustomRow(startText = nameLabel, endContent = {
             BodySmallText(
                 text = player?.name ?: "",
-                fontSize = dimenResource(id = R.dimen.font_size_extra_small).sp
+                fontSize = dimenResource(id = R.dimen.font_size_small).sp
             )
         })
         CustomRow(startText = dateOfBirthLabel, endContent = {
             BodySmallText(
                 text = player?.dateOfBirth ?: "",
-                fontSize = dimenResource(id = R.dimen.font_size_extra_small).sp
+                fontSize = dimenResource(id = R.dimen.font_size_small).sp
             )
         })
         CustomRow(startText = genderLabel, endContent = {
             BodySmallText(
                 text = player?.gender ?: "",
-                fontSize = dimenResource(id = R.dimen.font_size_extra_small).sp
+                fontSize = dimenResource(id = R.dimen.font_size_small).sp
             )
         })
         CustomRow(startText = heightLabel, endContent = {
             BodySmallText(
                 text = "${player?.height ?: "0"} $cmLabel",
-                fontSize = dimenResource(id = R.dimen.font_size_extra_small).sp
+                fontSize = dimenResource(id = R.dimen.font_size_small).sp
             )
         })
         CustomRow(startText = weightLabel, endContent = {
             BodySmallText(
                 text = "${player?.weight ?: "0"} $kgLabel",
-                fontSize = dimenResource(id = R.dimen.font_size_extra_small).sp
+                fontSize = dimenResource(id = R.dimen.font_size_small).sp
             )
         })
     }

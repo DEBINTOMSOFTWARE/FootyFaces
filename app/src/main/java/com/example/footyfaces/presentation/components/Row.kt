@@ -20,7 +20,7 @@ import com.example.footyfaces.utils.dimenResource
 fun CustomRow(
     startText: String,
     endContent: @Composable (() -> Unit)? = null,
-    fontSize: TextUnit = dimenResource(id = R.dimen.font_size_extra_small).sp
+    fontSize: TextUnit = dimenResource(id = R.dimen.font_size_small).sp
 ) {
     Column {
         Row(
